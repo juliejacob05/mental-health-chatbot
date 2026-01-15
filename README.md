@@ -55,5 +55,5 @@ Multiple publicly available emotion and sentiment datasets merged and preprocess
 ---
 
 ## Live Demo Link
-Click on **
+Click on *https://mental-health-chatbot-rzwk3t4nx69v6q5wssh9zh.streamlit.app/*
 
