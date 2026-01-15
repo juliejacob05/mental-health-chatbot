@@ -4,10 +4,10 @@ import pandas as pd
 #emotion datasets
 #-----------------
 
-e1 = pd.read_csv(r'D:\Providence\extras\internship\asap edunet dec25 - jan26\programs\datasets\emotion1.csv')
-e2 = pd.read_csv(r'D:\Providence\extras\internship\asap edunet dec25 - jan26\programs\datasets\emotion2.csv')
-e3 = pd.read_csv(r'D:\Providence\extras\internship\asap edunet dec25 - jan26\programs\datasets\emotion3.csv')
-e4 = pd.read_csv(r'D:\Providence\extras\internship\asap edunet dec25 - jan26\programs\datasets\emotion4.csv')
+e1 = pd.read_csv(r'D:\Providence\extras\internship\25.12 asap edunet\programs\datasets\emotion1.csv')
+e2 = pd.read_csv(r'D:\Providence\extras\internship\25.12 asap edunet\programs\datasets\emotion2.csv')
+e3 = pd.read_csv(r'D:\Providence\extras\internship\25.12 asap edunet\programs\datasets\emotion3.csv')
+e4 = pd.read_csv(r'D:\Providence\extras\internship\25.12 asap edunet\programs\datasets\emotion4.csv')
 
 e2 = e2.drop(columns='tweet_id')
 e3 = e3[1:]
@@ -24,6 +24,7 @@ emotion_mapping = {
     # Anxiety-related
     'worry': 'fear',
     'fear': 'fear',
+    'stress': 'fear',
 
     # Positive emotions
     'enthusiasm': 'positive',
@@ -58,11 +59,25 @@ e_data = e_data.dropna(subset=['final_text', 'mapped_emotion'])
 # Remove empty or whitespace-only text
 e_data = e_data[e_data['final_text'].str.strip() != ""]
 
+# ----- STUDENT_STRESS DATASETS ----
+stud_data = pd.read_csv(r'D:\Providence\extras\internship\25.12 asap edunet\programs\student_stress.csv')
+stud_data['mapped_emotion'] = stud_data['emotion'].map(emotion_mapping)
+stud_data = stud_data[['text', 'mapped_emotion']]
+stud_data = stud_data.rename(columns={'text': 'final_text'})
+
+# Combine with main emotion data
+e_data = pd.concat([e_data, stud_data], ignore_index=True)
+
+# Remove any possible empty or null rows
+e_data = e_data.dropna(subset=['final_text', 'mapped_emotion'])
+e_data = e_data[e_data['final_text'].str.strip() != ""]
+
+#training emotion datasets
+e_data.to_csv(r'D:\Providence\extras\internship\25.12 asap edunet\programs\datasets\processed_emotion_data.csv', index=False)
+
 print("Emotion distribution:")
 print(e_data['mapped_emotion'].value_counts())
 
-#training emotion datasets
-e_data.to_csv(r'D:\Providence\extras\internship\asap edunet dec25 - jan26\programs\datasets\processed_emotion_data.csv', index=False)
 
 
 
@@ -70,9 +85,9 @@ e_data.to_csv(r'D:\Providence\extras\internship\asap edunet dec25 - jan26\progra
 #sentiment datasets
 #-----------------
 
-s1 = pd.read_csv(r'D:\Providence\extras\internship\asap edunet dec25 - jan26\programs\datasets\senti1.csv')
-s2 = pd.read_csv(r'D:\Providence\extras\internship\asap edunet dec25 - jan26\programs\datasets\senti2.csv')
-s3 = pd.read_csv(r'D:\Providence\extras\internship\asap edunet dec25 - jan26\programs\datasets\senti3.csv')
+s1 = pd.read_csv(r'D:\Providence\extras\internship\25.12 asap edunet\programs\datasets\senti1.csv')
+s2 = pd.read_csv(r'D:\Providence\extras\internship\25.12 asap edunet\programs\datasets\senti2.csv')
+s3 = pd.read_csv(r'D:\Providence\extras\internship\25.12 asap edunet\programs\datasets\senti3.csv')
 
 s1 = s1.iloc[1:]
 s1 = s1.drop(columns=['Unnamed: 0', 'textID', 'selected_text', 'Time of Tweet', 'Age of User', 'Country', 'Population -2020', 'Land Area (Km²)', 'Density (P/Km²)'])
@@ -110,4 +125,4 @@ print("\nSentiment distribution:")
 print(s_data['mapped_sentiment'].value_counts())
 
 #training sentiment datasets
-s_data.to_csv(r'D:\Providence\extras\internship\asap edunet dec25 - jan26\programs\datasets\processed_sentiment_data.csv', index=False)
+s_data.to_csv(r'D:\Providence\extras\internship\25.12 asap edunet\programs\datasets\processed_sentiment_data.csv', index=False)

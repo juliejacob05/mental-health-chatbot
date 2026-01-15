@@ -9,7 +9,7 @@ import joblib
 #emotion datasets
 #-----------------
 
-e_data = pd.read_csv(r'D:\Providence\extras\internship\asap edunet dec25 - jan26\programs\datasets\processed_emotion_data.csv')
+e_data = pd.read_csv(r'D:\Providence\extras\internship\25.12 asap edunet\programs\datasets\processed_emotion_data.csv')
 # Prepare emotion data
 e_x = e_data['final_text']
 e_y = e_data['mapped_emotion']
@@ -36,7 +36,7 @@ joblib.dump(e_vec, 'emotion_vectorizer.pkl')
 #sentiment datasets
 #-------------------
 
-s_data = pd.read_csv(r'D:\Providence\extras\internship\asap edunet dec25 - jan26\programs\datasets\processed_sentiment_data.csv')
+s_data = pd.read_csv(r'D:\Providence\extras\internship\25.12 asap edunet\programs\datasets\processed_sentiment_data.csv')
 # Prepare sentiment data
 s_x = s_data['final_text']
 s_y = s_data['mapped_sentiment']
